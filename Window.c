@@ -81,9 +81,12 @@ LRESULT CALLBACK window_procedure(HWND hWnd, unsigned int message, WPARAM wParam
     //{
 
     //}
-    case WM_DESTROY:
-        PostQuitMessage(0);
-        break;
+    case WM_CLOSE:
+    {
+        PostMessage(hWnd, WM_CLOSE, 0, 0);
+        return 0;
+    }
+     break;
     default:
         break;
     }
@@ -98,7 +101,7 @@ void window_update(struct Window* window)
         TranslateMessage(&window->message);
         DispatchMessage(&window->message);
 
-        if (window->message.message == WM_QUIT)
+        if (window->message.message == WM_CLOSE)
             window->isOpen = FALSE;
     }
 }
@@ -135,7 +138,6 @@ float window_get_frame_time(struct Window* window)
 void window_destroy(struct Window* window)
 {
     UnregisterClass(window->windowClass.lpszClassName, window->hInstance);
-    DestroyWindow(window->handle);
 
     free(window);
 }
