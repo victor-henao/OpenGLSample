@@ -7,12 +7,18 @@ layout (location = 2) in vec2 textureCoordinates;
 out vec3 _color;
 out vec2 _textureCoordinates;
 
-uniform mat4 transform;
+mat4 transform;
+
+uniform mat4 rotation;
+uniform mat4 translation;
+uniform mat4 scale;
+
 uniform mat4 view;
 uniform mat4 projection;
 
 void main()
 {
+    transform = translation * rotation * scale;
     gl_Position = projection * view * transform * vec4(position.x, position.y, position.z, 1.0);
     _color = color;
     _textureCoordinates = textureCoordinates;

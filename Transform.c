@@ -38,31 +38,39 @@ void transform_translate(float matrix[4][4], float vector[3])
         matrix[3][i] = vector[i];
 }
 
-void transform_rotate(float matrix[4][4], float angle, float axis[3])
+void transform_rotate(float matrix[4][4], float angle, char axis)
 {
     angle = angle * (float)M_PI / 180.0f;
 
-    float x = axis[0];
-    float y = axis[1];
-    float z = axis[2];
-
-    float transform[4][4];
-
-    transform_copy(matrix, transform);
-
-    matrix[0][0] *= cosf(angle) + (powf(x, (float)2) * (1 - cosf(angle)));
-    matrix[0][1] *= y * x * (1 - cosf(angle)) + (z * sinf(angle));
-    matrix[0][2] *= z * x * (1 - cosf(angle)) - (y * sinf(angle));
-
-    matrix[1][0] *= x * y * (1 - cosf(angle)) - (z * sinf(angle));
-    matrix[1][1] *= cosf(angle) + (powf(y, (float)2) * (1 - cosf(angle)));
-    matrix[1][2] *= z * y * (1 - cosf(angle)) + (x * sinf(angle));
-
-    matrix[2][0] *= x * z * (1 - cosf(angle)) + (y * sinf(angle));
-    matrix[2][1] *= y * z * (1 - cosf(angle)) - (x * sinf(angle));
-    matrix[2][2] *= cosf(angle) + (powf(z, (float)2) * (1 - cosf(angle)));
-
-    transform_multiply(matrix, transform, matrix);
+    switch (axis)
+    {
+    case 'x':
+    {
+        matrix[1][1] =  cosf(angle);
+        matrix[1][2] =  sinf(angle);
+        matrix[2][1] = -sinf(angle);
+        matrix[2][2] =  cosf(angle);
+    }
+    break;
+    case 'y':
+    {
+        matrix[0][0] =  cosf(angle);
+        matrix[0][2] = -sinf(angle);
+        matrix[2][0] =  sinf(angle);
+        matrix[2][2] =  cosf(angle);
+    }
+    break;
+    case 'z':
+    {
+        matrix[0][0] =  cosf(angle);
+        matrix[0][1] =  sinf(angle);
+        matrix[1][0] = -sinf(angle);
+        matrix[1][1] =  cosf(angle);
+    }
+    break;
+    default:
+        break;
+    }
 }
 
 void transform_scale(float matrix[4][4], float vector[3])

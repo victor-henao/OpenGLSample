@@ -75,24 +75,34 @@ void mesh_set_rotation(struct Mesh* mesh, float x, float y, float z)
 
 void mesh_draw(struct Mesh* mesh, unsigned int verticesCount)
 {
-    float transform[4][4];
-    transform_identity(transform);
+    float rotation[4][4];
+    float translation[4][4];
+    float scale[4][4];
 
-    transform_translate(transform, (float[3]) { mesh->x, mesh->y, mesh->z }); // OK
+    transform_identity(rotation);
+    transform_identity(translation);
+    transform_identity(scale);
 
-    glm_rotate(transform, glm_rad(mesh->rotation_x), (vec3) { 1.0f, 0.0f, 0.0f });
-    glm_rotate(transform, glm_rad(mesh->rotation_y), (vec3) { 0.0f, 1.0f, 0.0f });
-    glm_rotate(transform, glm_rad(mesh->rotation_z), (vec3) { 0.0f, 0.0f, 1.0f });
+    unsigned int rotationLocation = glGetUniformLocation(shader->program, "rotation");
 
-    //matrix_rotate(transform, mesh->rotation_x, (float[3]) { 1.0f, 0.0f, 0.0f });
-    //matrix_rotate(transform, mesh->rotation_y, (float[3]) { 0.0f, 1.0f, 0.0f });
-    //matrix_rotate(transform, mesh->rotation_z, (float[3]) { 0.0f, 0.0f, 1.0f });
+    glUniformMatrix4fv(rotationLocation, 1, GL_FALSE, (float*)rotation);
+    transform_rotate(rotation, mesh->rotation_x, 'x');
 
-    glm_scale(transform, (vec3) { mesh->scale_x, mesh->scale_y, mesh->scale_z });
-    //matrix_scale(transform, (float[3]) { mesh->scale_x, mesh->scale_y, mesh->scale_z });
+    glUniformMatrix4fv(rotationLocation, 1, GL_FALSE, (float*)rotation);
+    transform_rotate(rotation, mesh->rotation_y, 'y');
 
-    unsigned int transformLocation = glGetUniformLocation(shader->program, "transform");
-    glUniformMatrix4fv(transformLocation, 1, GL_FALSE, (float*)transform);
+    glUniformMatrix4fv(rotationLocation, 1, GL_FALSE, (float*)rotation);
+    transform_rotate(rotation, mesh->rotation_z, 'z');
+
+    transform_translate(translation, (float[3]) { mesh->x, mesh->y, mesh->z });
+
+    unsigned int translationLocation = glGetUniformLocation(shader->program, "translation");
+    glUniformMatrix4fv(translationLocation, 1, GL_FALSE, (float*)translation);
+
+    transform_scale(scale, (float[3]) { mesh->scale_x, mesh->scale_y, mesh->scale_z });
+
+    unsigned int scaleLocation = glGetUniformLocation(shader->program, "scale");
+    glUniformMatrix4fv(scaleLocation, 1, GL_FALSE, (float*)scale);
 
     glBindVertexArray(mesh->vertexArray);
     glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexBuffer);
