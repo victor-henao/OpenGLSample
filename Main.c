@@ -104,16 +104,19 @@ int main(void)
     struct Mesh* wall2 = mesh_create(wallVertices, sizeof(wallVertices), squareElements, sizeof(squareElements));
     struct Mesh* wall3 = mesh_create(wallVertices, sizeof(wallVertices), squareElements, sizeof(squareElements));
     struct Mesh* wall4 = mesh_create(wallVertices, sizeof(wallVertices), squareElements, sizeof(squareElements));
+    struct Mesh* nani = mesh_create(wallVertices, sizeof(wallVertices), squareElements, sizeof(squareElements));
 
     struct Texture* crate = texture_create("res/crate.jpg");
     struct Texture* grass = texture_create("res/grass.jpg");
     struct Texture* bricks = texture_create("res/wall.jpg");
+    struct Texture* picture = texture_create("res/picture.jpg");
 
     mesh_set_scale(wall1, 2, 1, 1);
     mesh_set_scale(wall2, 2, 1, 1);
     mesh_set_scale(wall3, 2, 1, 1);
     mesh_set_scale(wall4, 2, 1, 1);
     mesh_set_scale(ground, 4, 4, 4);
+    mesh_set_scale(nani, 2, 2, 2);
 
     mesh_set_rotation(wall2, 0, 90, 0);
     mesh_set_rotation(wall4, 0, 90, 0);
@@ -128,6 +131,8 @@ int main(void)
     mesh_set_position(wall3, 0, 1, 4);
     mesh_set_position(wall4, 4, 1, 0);
 
+    mesh_set_position(nani, 0, 3, 0);
+
     //camera_set_position(camera, 3, 5, 5);
 
     while (window_is_open(window))
@@ -136,7 +141,8 @@ int main(void)
 
         camera_set_position(camera, sinf(t) * 7, 4, cosf(t) * 7);
 
-        mesh_set_rotation(cube1, 0, t * 100, 0);
+        mesh_set_rotation(nani, 0, cosf(t * 10) * 20, 0);
+        mesh_set_position(nani, 0, cosf(t * 10) + 3, 0);
 
         window_update(window);
         window_clear(0.0f, 0.0f, 0.0f);
@@ -155,6 +161,9 @@ int main(void)
         mesh_draw(wall2, 6);
         mesh_draw(wall3, 6);
         mesh_draw(wall4, 6);
+
+        texture_bind(picture);
+        mesh_draw(nani, 6);
 
         camera_look_at(camera, 0, 0, 0);
 
