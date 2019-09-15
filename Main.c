@@ -136,6 +136,8 @@ int main(void)
 
         camera_set_position(camera, sinf(t) * 7, 4, cosf(t) * 7);
 
+        mesh_set_rotation(cube1, 0, t * 100, 0);
+
         window_update(window);
         window_clear(0.0f, 0.0f, 0.0f);
 
