@@ -84,13 +84,22 @@ void camera_look_at(struct Camera* camera, float look_x, float look_y, float loo
     view[3][2] = 0.0f;
     view[3][3] = 1.0f;
 
-    //glm_lookat((vec3) { camera->x, camera->y, camera->z }, (vec3) { look_x, look_y, look_z }, (vec3) { 0, 1, 0 }, view);
+    glm_lookat((vec3) { camera->x, camera->y, camera->z }, (vec3) { look_x, look_y, look_z }, (vec3) { 0, 1, 0 }, view);
 
     unsigned int viewLocation = glGetUniformLocation(shader->program, "view");
     glUniformMatrix4fv(viewLocation, 1, GL_FALSE, (float*)view);
 
-    mat4 projection;
-    glm_perspective(glm_rad(camera->fov), camera->ratio, 0.1f, 100.0f, projection);
+    float projection[4][4];
+
+    for (unsigned int i = 0; i < 4; i++)
+        for (unsigned int j = 0; j < 4; j++)
+            projection[i][j] = 0.0f;
+
+    projection[0][0] = 1.0f / (camera->ratio * tanf(glm_rad(camera->fov) / 2));
+    projection[1][1] = 1.0f / tanf(glm_rad(camera->fov) / 2);
+    projection[2][2] = -((100.0f + 0.1f) / (100.0f - 0.1f));
+    projection[2][3] = -1.0f;
+    projection[3][2] = -((2.0f * 100.0f * 0.1f) / (100.0f - 0.1f));
 
     unsigned int projectionLocation = glGetUniformLocation(shader->program, "projection");
     glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, (float*)projection);
