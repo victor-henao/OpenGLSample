@@ -1,7 +1,7 @@
 #include "Camera.h"
 #include "Shader.h"
 #include "Vector.h"
-#include "Transform.h"
+#include "Matrix.h"
 
 struct Camera* camera_create(float fov, float ratio)
 {
@@ -32,7 +32,7 @@ void camera_set_position(struct Camera* camera, float x, float y, float z)
 void camera_look_at(struct Camera* camera, float look_x, float look_y, float look_z)
 {
     float view[4][4];
-    transform_identity(view);
+    matrix_identity(view);
     
     float side[3] = { 0.0f, 0.0f, 0.0f };
     float forward[3] = { 0.0f, 0.0f, 0.0f };
@@ -74,8 +74,8 @@ void camera_look_at(struct Camera* camera, float look_x, float look_y, float loo
         for (unsigned int j = 0; j < 4; j++)
             projection[i][j] = 0.0f;
 
-    projection[0][0] = 1.0f / (camera->ratio * tanf(camera->fov * (float)M_PI / 180.0f / 2));
-    projection[1][1] = 1.0f / tanf(camera->fov * (float)M_PI / 180.0f / 2);
+    projection[0][0] = 1.0f / (camera->ratio * tanf((camera->fov * (float)M_PI / 180.0f) / 2));
+    projection[1][1] = 1.0f / tanf((camera->fov * (float)M_PI / 180.0f) / 2);
     projection[2][2] = -((100.0f + 0.1f) / (100.0f - 0.1f));
     projection[2][3] = -1.0f;
     projection[3][2] = -((2.0f * 100.0f * 0.1f) / (100.0f - 0.1f));

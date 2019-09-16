@@ -36,10 +36,10 @@
     <ClCompile Include="Texture.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Transform.c">
+    <ClCompile Include="Vector.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Vector.c">
+    <ClCompile Include="Matrix.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,10 +62,10 @@
     <ClInclude Include="Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.h">
+    <ClInclude Include="Vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Vector.h">
+    <ClInclude Include="Matrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

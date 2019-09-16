@@ -1,6 +1,6 @@
 #include "Mesh.h"
 #include "Shader.h"
-#include "Transform.h"
+#include "Matrix.h"
 
 struct Mesh* mesh_create(float* vertices, unsigned int size, unsigned int* elements, unsigned int elementSize)
 {
@@ -81,29 +81,26 @@ void mesh_draw(struct Mesh* mesh, unsigned int verticesCount)
     float translation[4][4];
     float scale[4][4];
 
-    transform_identity(rotation_x);
-    transform_identity(rotation_y);
-    transform_identity(rotation_z);
-    transform_identity(translation);
-    transform_identity(scale);
+    matrix_identity(rotation_x);
+    matrix_identity(rotation_y);
+    matrix_identity(rotation_z);
+    matrix_identity(translation);
+    matrix_identity(scale);
 
-    transform_rotate(rotation_x, mesh->rotation_z, 'z');
-    transform_rotate(rotation_y, mesh->rotation_y, 'y');
-    transform_rotate(rotation_z, mesh->rotation_x, 'x');
+    matrix_rotate(rotation_x, mesh->rotation_z, 'z');
+    matrix_rotate(rotation_y, mesh->rotation_y, 'y');
+    matrix_rotate(rotation_z, mesh->rotation_x, 'x');
 
-    transform_translate(translation, (float[3]) { mesh->x, mesh->y, mesh->z });
+    matrix_translate(translation, (float[3]) { mesh->x, mesh->y, mesh->z });
 
-    transform_scale(scale, (float[3]) { mesh->scale_x, mesh->scale_y, mesh->scale_z });
+    matrix_scale(scale, (float[3]) { mesh->scale_x, mesh->scale_y, mesh->scale_z });
 
-    /* X rotation  */
     unsigned int rotationXLocation = glGetUniformLocation(shader->program, "rotation_x");
     glUniformMatrix4fv(rotationXLocation, 1, GL_FALSE, (float*)rotation_x);
 
-    /* Y rotation  */
     unsigned int rotationYLocation = glGetUniformLocation(shader->program, "rotation_y");
     glUniformMatrix4fv(rotationYLocation, 1, GL_FALSE, (float*)rotation_y);
 
-    /* Z rotation  */
     unsigned int rotationZLocation = glGetUniformLocation(shader->program, "rotation_z");
     glUniformMatrix4fv(rotationZLocation, 1, GL_FALSE, (float*)rotation_z);
 

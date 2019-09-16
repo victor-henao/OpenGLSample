@@ -139,7 +139,7 @@
     <ClCompile Include="Mesh.c" />
     <ClCompile Include="Shader.c" />
     <ClCompile Include="Texture.c" />
-    <ClCompile Include="Transform.c" />
+    <ClCompile Include="Matrix.c" />
     <ClCompile Include="Vector.c" />
     <ClCompile Include="Window.c" />
   </ItemGroup>
@@ -149,7 +149,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="Transform.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
