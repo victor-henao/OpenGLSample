@@ -54,11 +54,11 @@ void mesh_set_position(struct Mesh* mesh, float x, float y, float z)
     mesh->position[2] = z;
 }
 
-void mesh_set_scale(struct Mesh* mesh, float scale_x, float scale_y, float scale_z)
+void mesh_set_scale(struct Mesh* mesh, float x, float y, float z)
 {
-    mesh->scale[0] = scale_x;
-    mesh->scale[1] = scale_y;
-    mesh->scale[2] = scale_z;
+    mesh->scale[0] = x;
+    mesh->scale[1] = y;
+    mesh->scale[2] = z;
 }
 
 void mesh_set_rotation(struct Mesh* mesh, float x, float y, float z)
