@@ -9,12 +9,12 @@ struct Mesh
     unsigned int vertexArray;
     unsigned int vertexBuffer;
     unsigned int elementBuffer;
-    float x, y, z;
-    float scale_x, scale_y, scale_z;
-    float rotation_x, rotation_y, rotation_z;
+    float position[3];
+    float scale[3];
+    float rotation[3];
 };
 
-enum ObjectError
+enum MeshError
 {
     MESH_MALLOC_FAILED = 1,
     MESH_MALLOC_VERTEX_BUFFER_FAILED,

@@ -23,54 +23,49 @@ struct Mesh* mesh_create(float* vertices, unsigned int size, unsigned int* eleme
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->elementBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementSize, elements, GL_STATIC_DRAW);
 
-    mesh->x = 0.0f;
-    mesh->y = 0.0f;
-    mesh->z = 0.0f;
-
-    mesh->scale_x = 1.0f;
-    mesh->scale_y = 1.0f;
-    mesh->scale_z = 1.0f;
-
-    mesh->rotation_x = 0.0f;
-    mesh->rotation_y = 0.0f;
-    mesh->rotation_z = 0.0f;
+    for (unsigned int i = 0; i < 3; i++)
+    {
+        mesh->position[i] = 0.0f;
+        mesh->scale[i] = 1.0f;
+        mesh->rotation[i] = 0.0f;
+    }
 
     return mesh;
 }
 
 void mesh_translate(struct Mesh* mesh, float x, float y, float z)
 {
-    mesh->x += x;
-    mesh->y += y;
-    mesh->z += z;
+    mesh->position[0] += x;
+    mesh->position[1] += y;
+    mesh->position[2] += z;
 }
 
 void mesh_rotate(struct Mesh* mesh, float x, float y, float z)
 {
-    mesh->rotation_x += x;
-    mesh->rotation_y += y;
-    mesh->rotation_z += z;
+    mesh->rotation[0] += x;
+    mesh->rotation[1] += y;
+    mesh->rotation[2] += z;
 }
 
 void mesh_set_position(struct Mesh* mesh, float x, float y, float z)
 {
-    mesh->x = x;
-    mesh->y = y;
-    mesh->z = z;
+    mesh->position[0] = x;
+    mesh->position[1] = y;
+    mesh->position[2] = z;
 }
 
 void mesh_set_scale(struct Mesh* mesh, float scale_x, float scale_y, float scale_z)
 {
-    mesh->scale_x = scale_x;
-    mesh->scale_y = scale_y;
-    mesh->scale_z = scale_z;
+    mesh->scale[0] = scale_x;
+    mesh->scale[1] = scale_y;
+    mesh->scale[2] = scale_z;
 }
 
 void mesh_set_rotation(struct Mesh* mesh, float x, float y, float z)
 {
-    mesh->rotation_x = x;
-    mesh->rotation_y = y;
-    mesh->rotation_z = z;
+    mesh->rotation[0] = x;
+    mesh->rotation[1] = y;
+    mesh->rotation[2] = z;
 }
 
 void mesh_draw(struct Mesh* mesh, unsigned int verticesCount)
@@ -87,13 +82,13 @@ void mesh_draw(struct Mesh* mesh, unsigned int verticesCount)
     matrix_identity(translation);
     matrix_identity(scale);
 
-    matrix_rotate(rotation_x, mesh->rotation_z, 'z');
-    matrix_rotate(rotation_y, mesh->rotation_y, 'y');
-    matrix_rotate(rotation_z, mesh->rotation_x, 'x');
+    matrix_rotate(rotation_x, mesh->rotation[0], 'x');
+    matrix_rotate(rotation_y, mesh->rotation[1], 'y');
+    matrix_rotate(rotation_z, mesh->rotation[2], 'z');
 
-    matrix_translate(translation, (float[3]) { mesh->x, mesh->y, mesh->z });
+    matrix_translate(translation, mesh->position);
 
-    matrix_scale(scale, (float[3]) { mesh->scale_x, mesh->scale_y, mesh->scale_z });
+    matrix_scale(scale, mesh->scale);
 
     unsigned int rotationXLocation = glGetUniformLocation(shader->program, "rotation_x");
     glUniformMatrix4fv(rotationXLocation, 1, GL_FALSE, (float*)rotation_x);
