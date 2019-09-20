@@ -122,7 +122,7 @@ void window_swap_buffers(struct Window* window)
 
     if (diff >= 1000)
     {
-        printf("FPS = %u | Frame time = %f\n", fps, window->frameTime);
+        printf("FPS = %u\n", fps);
         timerStart = glutGet(GLUT_ELAPSED_TIME);
         fps = 0;
     }

@@ -2,16 +2,25 @@
 #define MESH_H
 
 #include <stdlib.h>
+#include <string.h>
 #include <GL/glew.h>
+#include "Vector.h"
+
+struct Vertex
+{
+    struct Vector3f position;
+    struct Vector2f textureCoordinates;
+    struct Vector3f normal;
+};
 
 struct Mesh
 {
     unsigned int vertexArray;
     unsigned int vertexBuffer;
-    unsigned int elementBuffer;
-    float position[3];
-    float scale[3];
-    float rotation[3];
+    unsigned int vertexCount;
+    struct Vector3f position;
+    struct Vector3f scale;
+    struct Vector3f rotation;
 };
 
 enum MeshError
@@ -25,13 +34,12 @@ enum MeshError
     MESH_MALLOC_ELEMENT_BUFFERS_FAILED
 };
 
-struct Mesh* mesh_create(float* vertices, unsigned int size, unsigned int* elements, unsigned int elementSize);
-void mesh_translate(struct Mesh* mesh, float x, float y, float z);
-void mesh_rotate(struct Mesh* mesh, float x, float y, float z);
+struct Mesh* mesh_create(float* vertices, unsigned int size);
+struct Mesh* mesh_load(char* path);
 void mesh_set_position(struct Mesh* mesh, float x, float y, float z);
 void mesh_set_scale(struct Mesh* mesh, float x, float y, float z);
 void mesh_set_rotation(struct Mesh* mesh, float x, float y, float z);
-void mesh_draw(struct Mesh* mesh, unsigned int verticesCount);
+void mesh_draw(struct Mesh* mesh);
 void mesh_destroy(struct Mesh* mesh);
 
 #endif // !MESH_H
