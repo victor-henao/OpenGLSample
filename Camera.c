@@ -29,7 +29,7 @@ void camera_set_position(struct Camera* camera, float x, float y, float z)
     camera->z = z;
 }
 
-void camera_look_at(struct Camera* camera, float look_x, float look_y, float look_z)
+void camera_look_at(struct Camera* camera, struct Shader* shader, float x, float y, float z)
 {
     float view[4][4];
     matrix_identity(view);
@@ -38,7 +38,7 @@ void camera_look_at(struct Camera* camera, float look_x, float look_y, float loo
     float forward[3] = { 0.0f, 0.0f, 0.0f };
 
     float eye[3] = { camera->x, camera->y, camera->z };
-    float at[3]  = { look_x, look_y, look_z };
+    float at[3]  = { x, y, z };
     float up[3]  = { 0.0f, 1.0f, 0.0f };
 
     vector_sub(eye, at, forward);

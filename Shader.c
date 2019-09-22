@@ -1,8 +1,8 @@
 #include "Shader.h"
 
-void shader_initialize(char* vertexShaderSource, char* fragmentShaderSource)
+struct Shader* shader_create(char* vertexShaderPath, char* fragmentShaderPath)
 {
-    shader = malloc(sizeof(struct Shader));
+    struct Shader* shader = malloc(sizeof(struct Shader));
 
     if (shader == NULL)
     {
@@ -10,8 +10,8 @@ void shader_initialize(char* vertexShaderSource, char* fragmentShaderSource)
         exit(SHADER_MALLOC_FAILED);
     }
 
-    shader->vertexShader = shader_compile(GL_VERTEX_SHADER, vertexShaderSource);
-    shader->fragmentShader = shader_compile(GL_FRAGMENT_SHADER, fragmentShaderSource);
+    shader->vertexShader = shader_compile(GL_VERTEX_SHADER, vertexShaderPath);
+    shader->fragmentShader = shader_compile(GL_FRAGMENT_SHADER, fragmentShaderPath);
 
     shader->program = glCreateProgram();
 
@@ -19,13 +19,15 @@ void shader_initialize(char* vertexShaderSource, char* fragmentShaderSource)
     glAttachShader(shader->program, shader->fragmentShader);
 
     glLinkProgram(shader->program);
-    glUseProgram(shader->program);
+    //glUseProgram(shader->program);
 
     glDetachShader(shader->program, shader->vertexShader);
     glDetachShader(shader->program, shader->fragmentShader);
 
     glDeleteShader(shader->vertexShader);
     glDeleteShader(shader->fragmentShader);
+
+    return shader;
 }
 
 unsigned int shader_compile(unsigned int type, char* path)
@@ -84,7 +86,7 @@ char* shader_read_file(char* path)
     return content;
 }
 
-void shader_destroy()
+void shader_destroy(struct Shader* shader)
 {
     glDeleteProgram(shader->program);
 

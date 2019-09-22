@@ -198,7 +198,7 @@ void mesh_set_rotation(struct Mesh* mesh, float x, float y, float z)
     mesh->rotation.z = z;
 }
 
-void mesh_draw(struct Mesh* mesh)
+void mesh_draw(struct Mesh* mesh, struct Shader* shader)
 {
     float rotationX[4][4];
     float rotationY[4][4];
@@ -219,6 +219,8 @@ void mesh_draw(struct Mesh* mesh)
     matrix_translate(translation, (float[3]) { mesh->position.x, mesh->position.y, mesh->position.z });
 
     matrix_scale(scale, (float[3]) { mesh->scale.x, mesh->scale.y, mesh->scale.z });
+
+    glUseProgram(shader->program);
 
     unsigned int rotationXLocation = glGetUniformLocation(shader->program, "rotationX");
     glUniformMatrix4fv(rotationXLocation, 1, GL_FALSE, (float*)rotationX);
@@ -244,8 +246,8 @@ void mesh_draw(struct Mesh* mesh)
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 
-    //glEnableVertexAttribArray(2);
-    //glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
 
     glDrawArrays(GL_TRIANGLES, 0, mesh->vertexCount);
 

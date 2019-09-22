@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <GL/glew.h>
+#include "Shader.h"
 #include "Vector.h"
 
 struct Vertex
@@ -39,7 +40,7 @@ struct Mesh* mesh_load(char* path);
 void mesh_set_position(struct Mesh* mesh, float x, float y, float z);
 void mesh_set_scale(struct Mesh* mesh, float x, float y, float z);
 void mesh_set_rotation(struct Mesh* mesh, float x, float y, float z);
-void mesh_draw(struct Mesh* mesh);
+void mesh_draw(struct Mesh* mesh, struct Shader* shader);
 void mesh_destroy(struct Mesh* mesh);
 
 #endif // !MESH_H

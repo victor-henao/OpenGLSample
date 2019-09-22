@@ -2,11 +2,11 @@
 
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec2 textureCoordinates;
-//layout (location = 2) in vec2 normal;
+layout (location = 2) in vec3 normal;
 
 out vec2 _textureCoordinates;
 out vec3 _normal;
-//out vev3 _fragmentPosition;
+out vec3 _fragmentPosition;
 
 mat4 transform;
 
@@ -25,7 +25,9 @@ void main()
 {
     rotation = rotationX * rotationY * rotationZ;
     transform = translation * rotation * scale;
-    gl_Position = projection * view * transform * vec4(position.x, position.y, position.z, 1.0);
+    
+    _fragmentPosition = vec3(transform * vec4(position, 1.0));
+    gl_Position = projection * view * vec4(_fragmentPosition, 1.0);
     _textureCoordinates = textureCoordinates;
-    //_normal = Normal;
+    _normal = normal;
 }

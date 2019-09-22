@@ -19,11 +19,9 @@ enum ShaderError
     SHADER_READ_FAILED
 };
 
-struct Shader* shader;
-
-void shader_initialize(char* vertexShaderSource, char* fragmentShaderSource);
+struct Shader* shader_create(char* vertexShaderPath, char* fragmentShaderPath);
 unsigned int shader_compile(unsigned int type, char* path);
 char* shader_read_file(char* path);
-void shader_destroy();
+void shader_destroy(struct Shader* shader);
 
 #endif // !SHADER_H
