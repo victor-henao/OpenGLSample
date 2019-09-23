@@ -14,6 +14,8 @@ int main(void)
     printf("Hi!\n");
 
     struct Window* window   = window_create(800, 600, "Nani OpenGL");
+    context_create(window);
+
     struct Shader* shader   = shader_create("shaders/VS.glsl", "shaders/FS.glsl");
     struct Camera* camera   = camera_create(75.0f, (float)window->width / (float)window->height);
     struct Mesh* cube       = mesh_load("res/cube.obj");
@@ -22,7 +24,7 @@ int main(void)
     struct Texture* wall    = texture_create("res/ground.jpg");
     struct Light* light     = light_create(1.0f, 0.0f, 0.0f);
 
-    context_create(window);
+
 
     camera_set_position(camera, 3, 3, 3);
     mesh_set_position(cube, -2, 0, 0);
