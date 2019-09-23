@@ -1,7 +1,5 @@
 #include "Texture.h"
-
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include "SFML/Graphics.h"
 
 struct Texture* texture_create(char* textureSource)
 {
@@ -14,14 +12,14 @@ struct Texture* texture_create(char* textureSource)
     }
 
     glGenTextures(1, &texture->id);
-
-    unsigned int width, height, channelCount;
-
     glBindTexture(GL_TEXTURE_2D, texture->id);
-    unsigned char* image = stbi_load(textureSource, &width, &height, &channelCount, 0);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+
+    sfImage* image = sfImage_createFromFile(textureSource);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, sfImage_getSize(image).x, sfImage_getSize(image).y, 0, GL_RGBA, GL_UNSIGNED_BYTE, sfImage_getPixelsPtr(image));
     glGenerateMipmap(GL_TEXTURE_2D);
-    stbi_image_free(image);
+
+    sfImage_destroy(image);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);

@@ -21,8 +21,7 @@ int main(void)
     struct Mesh* cube       = mesh_load("res/cube.obj");
     struct Mesh* cylinder   = mesh_load("res/cylinder.obj");
     struct Mesh* cone       = mesh_load("res/cone.obj");
-    struct Texture* grass   = texture_create("res/grass.jpg");
-    struct Texture* wall    = texture_create("res/wall.jpg");
+    struct Texture* wall    = texture_create("res/ground.jpg");
     struct Light* light     = light_create(1.0f, 0.0f, 0.0f);
 
     camera_set_position(camera, 0, 5, 5);
@@ -42,10 +41,8 @@ int main(void)
 
         camera_look_at(camera, shader, 0, 0, 0);
 
-        texture_bind(grass);
-        mesh_draw(cube, shader);
-
         texture_bind(wall);
+        mesh_draw(cube, shader);
         mesh_draw(cylinder, shader);
         mesh_draw(cone, shader);
 
@@ -54,7 +51,6 @@ int main(void)
     }
 
     light_destroy(light);
-    texture_destroy(grass);
     texture_destroy(wall);
     mesh_destroy(cube);
     mesh_destroy(cylinder);
