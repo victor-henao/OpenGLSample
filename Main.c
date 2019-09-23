@@ -16,16 +16,16 @@ int main(void)
     struct Window* window = window_create(800, 600, "Nani OpenGL");
     glcontext_create(window);
 
-    struct Shader* shader = shader_create("shaders/VS.glsl", "shaders/FS.glsl");
-    struct Camera* camera = camera_create(75.0f, (float)window->width / (float)window->height);
-    struct Mesh* cube = mesh_load("res/cube.obj");
-    struct Mesh* cylinder = mesh_load("res/cylinder.obj");
-    struct Mesh* cone = mesh_load("res/cone.obj");
-    struct Texture* grass = texture_create("res/grass.jpg");
-    struct Texture* wall = texture_create("res/wall.jpg");
-    struct Light* light = light_create(1.0f, 0.0f, 0.0f);
+    struct Shader* shader   = shader_create("shaders/VS.glsl", "shaders/FS.glsl");
+    struct Camera* camera   = camera_create(75.0f, (float)window->width / (float)window->height);
+    struct Mesh* cube       = mesh_load("res/cube.obj");
+    struct Mesh* cylinder   = mesh_load("res/cylinder.obj");
+    struct Mesh* cone       = mesh_load("res/cone.obj");
+    struct Texture* grass   = texture_create("res/grass.jpg");
+    struct Texture* wall    = texture_create("res/wall.jpg");
+    struct Light* light     = light_create(1.0f, 0.0f, 0.0f);
 
-    camera_set_position(camera, 2, 2, 3);
+    camera_set_position(camera, 0, 5, 5);
     mesh_set_position(cube, -2, 0, 0);
     mesh_set_position(cone, 2, 0, 0);
 
@@ -37,7 +37,8 @@ int main(void)
         window_clear(0.0f, 0.0f, 0.0f);
 
         light_illuminate(light, shader);
-        light_set_position(light, cosf(t) * 5, 0.0f, sinf(t) * 5);
+        light_set_position(light, 0.0f, cosf(t) * 3, sinf(t) * 3);
+        mesh_set_position(cylinder, 0.0f, cosf(t), 0.0f);
 
         camera_look_at(camera, shader, 0, 0, 0);
 

@@ -13,9 +13,7 @@ struct Camera* camera_create(float fov, float ratio)
         exit(CAMERA_MALLOC_FAILED);
     }
 
-    camera->x       = 0.0f;
-    camera->y       = 0.0f;
-    camera->z       = 0.0f;
+    camera->position = (struct Vector3f){ 0.0f, 0.0f, 0.0f };
     camera->fov     = fov;
     camera->ratio   = ratio;
 
@@ -24,9 +22,9 @@ struct Camera* camera_create(float fov, float ratio)
 
 void camera_set_position(struct Camera* camera, float x, float y, float z)
 {
-    camera->x = x;
-    camera->y = y;
-    camera->z = z;
+    camera->position.x = x;
+    camera->position.y = y;
+    camera->position.z = z;
 }
 
 void camera_look_at(struct Camera* camera, struct Shader* shader, float x, float y, float z)
@@ -37,7 +35,7 @@ void camera_look_at(struct Camera* camera, struct Shader* shader, float x, float
     float side[3] = { 0.0f, 0.0f, 0.0f };
     float forward[3] = { 0.0f, 0.0f, 0.0f };
 
-    float eye[3] = { camera->x, camera->y, camera->z };
+    float eye[3] = { camera->position.x, camera->position.y, camera->position.z };
     float at[3]  = { x, y, z };
     float up[3]  = { 0.0f, 1.0f, 0.0f };
 
@@ -82,6 +80,11 @@ void camera_look_at(struct Camera* camera, struct Shader* shader, float x, float
 
     unsigned int projectionLocation = glGetUniformLocation(shader->program, "projection");
     glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, (float*)projection);
+
+    float position[3] = { camera->position.x, camera->position.y, camera->position.z };
+
+    unsigned int positionLocation = glGetUniformLocation(shader->program, "cameraPosition");
+    glUniform3fv(positionLocation, 1, (float*)position);
 }
 
 void camera_destroy(struct Camera* camera)

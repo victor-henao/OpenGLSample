@@ -29,5 +29,5 @@ void main()
     _fragmentPosition = vec3(transform * vec4(position, 1.0));
     gl_Position = projection * view * vec4(_fragmentPosition, 1.0);
     _textureCoordinates = textureCoordinates;
-    _normal = normal;
+    _normal = mat3(transpose(inverse(transform))) * normal;
 }
