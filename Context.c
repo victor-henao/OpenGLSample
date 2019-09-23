@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <GL/glew.h>
-#include "GLContext.h"
+#include "Context.h"
 
-void glcontext_create(struct Window* window)
+void context_create(struct Window* window)
 {
     window->deviceContext = GetDC(window->handle);
 
@@ -41,7 +41,7 @@ void glcontext_create(struct Window* window)
     printf("Using OpenGL version %s\n", glGetString(GL_VERSION));
 }
 
-void glcontext_destroy(struct Window* window)
+void context_destroy(struct Window* window)
 {
     wglMakeCurrent(NULL, NULL);
     wglDeleteContext(window->renderingContext);

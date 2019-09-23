@@ -134,7 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.c" />
-    <ClCompile Include="GLContext.c" />
+    <ClCompile Include="Context.c" />
     <ClCompile Include="Light.c" />
     <ClCompile Include="Main.c" />
     <ClCompile Include="Mesh.c" />
@@ -146,7 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="GLContext.h" />
+    <ClInclude Include="Context.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Shader.h" />
