@@ -1,5 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <GL/glew.h>
 #include "Light.h"
-#include "Shader.h"
 
 struct Light* light_create(float red, float green, float blue)
 {

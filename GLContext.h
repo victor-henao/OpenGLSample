@@ -1,9 +1,6 @@
 #ifndef GLCONTEXT_H
 #define GLCONTEXT_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <GL/glew.h>
 #include "Window.h"
 
 enum GLContextError

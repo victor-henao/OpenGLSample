@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <GL/glew.h>
 #include "Mesh.h"
 #include "Shader.h"
 #include "Matrix.h"

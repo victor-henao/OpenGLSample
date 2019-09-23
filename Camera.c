@@ -1,6 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <GL/glew.h>
 #include "Camera.h"
-#include "Shader.h"
-#include "Vector.h"
 #include "Matrix.h"
 
 struct Camera* camera_create(float fov, float ratio)
@@ -13,9 +14,9 @@ struct Camera* camera_create(float fov, float ratio)
         exit(CAMERA_MALLOC_FAILED);
     }
 
-    camera->position = (struct Vector3f){ 0.0f, 0.0f, 0.0f };
-    camera->fov     = fov;
-    camera->ratio   = ratio;
+    camera->position    = (struct Vector3f){ 0.0f, 0.0f, 0.0f };
+    camera->fov         = fov;
+    camera->ratio       = ratio;
 
     return camera;
 }
@@ -30,14 +31,12 @@ void camera_set_position(struct Camera* camera, float x, float y, float z)
 void camera_look_at(struct Camera* camera, struct Shader* shader, float x, float y, float z)
 {
     float view[4][4];
+    float side[3]       = { 0.0f, 0.0f, 0.0f };
+    float forward[3]    = { 0.0f, 0.0f, 0.0f };
+    float eye[3]        = { camera->position.x, camera->position.y, camera->position.z };
+    float at[3]         = { x, y, z };
+    float up[3]         = { 0.0f, 1.0f, 0.0f };
     matrix_identity(view);
-    
-    float side[3] = { 0.0f, 0.0f, 0.0f };
-    float forward[3] = { 0.0f, 0.0f, 0.0f };
-
-    float eye[3] = { camera->position.x, camera->position.y, camera->position.z };
-    float at[3]  = { x, y, z };
-    float up[3]  = { 0.0f, 1.0f, 0.0f };
 
     vector_sub(eye, at, forward);
     vector_normalize(forward);

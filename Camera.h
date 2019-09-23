@@ -1,8 +1,6 @@
 #ifndef CAMERA_H
 #define CMAERA_H
 
-#include <stdlib.h>
-#include <GL/glew.h>
 #include "Shader.h"
 #include "Vector.h"
 

@@ -24,7 +24,7 @@ int main(void)
     struct Texture* wall    = texture_create("res/ground.jpg");
     struct Light* light     = light_create(1.0f, 0.0f, 0.0f);
 
-    camera_set_position(camera, 0, 5, 5);
+    camera_set_position(camera, 3, 3, 3);
     mesh_set_position(cube, -2, 0, 0);
     mesh_set_position(cone, 2, 0, 0);
 
@@ -36,10 +36,10 @@ int main(void)
         window_clear(0.0f, 0.0f, 0.0f);
 
         light_illuminate(light, shader);
-        light_set_position(light, 0.0f, cosf(t) * 3, sinf(t) * 3);
-        mesh_set_position(cylinder, 0.0f, cosf(t), 0.0f);
 
         camera_look_at(camera, shader, 0, 0, 0);
+        light_set_position(light, 0.0f, cosf(t) * 3, sinf(t) * 3);
+        mesh_set_position(cylinder, 0.0f, cosf(t), 0.0f);
 
         texture_bind(wall);
         mesh_draw(cube, shader);

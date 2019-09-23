@@ -1,3 +1,4 @@
+#include <math.h>
 #include "Vector.h"
 
 void vector_sub(float vector1[3], float vector2[3], float result[3])

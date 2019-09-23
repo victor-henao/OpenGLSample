@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <GL/glew.h>
 #include "Shader.h"
 
 struct Shader* shader_create(char* vertexShaderPath, char* fragmentShaderPath)

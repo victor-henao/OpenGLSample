@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <GL/glew.h>
 #include "GLContext.h"
 
 void glcontext_create(struct Window* window)
