@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <GL/glew.h>
-#include "Texture.h"
 #include "SFML/Graphics.h"
+#include "Texture.h"
 
 struct Texture* texture_create(char* texturePath)
 {

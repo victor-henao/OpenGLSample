@@ -25,9 +25,9 @@ void main()
 {
     rotation = rotationX * rotationY * rotationZ;
     transform = translation * rotation * scale;
-    
     _fragmentPosition = vec3(transform * vec4(position, 1.0));
     gl_Position = projection * view * vec4(_fragmentPosition, 1.0);
+    
     _textureCoordinates = textureCoordinates;
     _normal = mat3(transpose(inverse(transform))) * normal;
 }

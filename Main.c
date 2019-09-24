@@ -21,14 +21,14 @@ int main(void)
     struct Mesh* cube       = mesh_load("res/cube.obj");
     struct Mesh* cylinder   = mesh_load("res/cylinder.obj");
     struct Mesh* cone       = mesh_load("res/cone.obj");
+    struct Mesh* sphere     = mesh_load("res/sphere.obj");
     struct Texture* wall    = texture_create("res/ground.jpg");
-    struct Light* light     = light_create(1.0f, 0.0f, 0.0f);
-
-
+    struct Light* light     = light_create(0.0f, 0.0f, 1.0f);
 
     camera_set_position(camera, 3, 3, 3);
     mesh_set_position(cube, -2, 0, 0);
     mesh_set_position(cone, 2, 0, 0);
+    mesh_set_position(sphere, 0, 0, 2);
 
     while (window_is_open(window))
     {
@@ -41,15 +41,15 @@ int main(void)
 
         camera_look_at(camera, shader, 0, 0, 0);
         light_set_position(light, 0.0f, cosf(t) * 3, sinf(t) * 3);
-        mesh_set_position(cylinder, 0.0f, cosf(t), 0.0f);
 
         texture_bind(wall);
         mesh_draw(cube, shader);
         mesh_draw(cylinder, shader);
         mesh_draw(cone, shader);
+        mesh_draw(sphere, shader);
 
         window_swap_buffers(window);
-        t += 0.005f;
+        t += 0.05f;
     }
 
     light_destroy(light);

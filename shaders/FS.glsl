@@ -13,18 +13,20 @@ uniform vec3 cameraPosition;
 
 void main()
 {
+    // Ambient lighting
     float ambientStrength = 0.0;
     vec3 ambient = ambientStrength * lightColor;
     
+    // Diffuse lighting
     vec3 normalized = normalize(_normal);
     vec3 lightDirection = normalize(lightPosition - _fragmentPosition);
     float diffuseFactor = max(dot(normalized, lightDirection), 0.0);
     vec3 diffuse = diffuseFactor * lightColor;
     
+    // Specular lighting
+    float specularStrength = 1.0;
     vec3 cameraDirection = normalize(cameraPosition - _fragmentPosition);
     vec3 reflectDirection = reflect(-lightDirection, normalized);
-    
-    float specularStrength = 1.0;
     float specularFactor = pow(max(dot(cameraDirection, reflectDirection), 0.0), 256);
     vec3 specular = specularStrength * specularFactor * lightColor;
     

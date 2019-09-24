@@ -63,7 +63,7 @@ struct Mesh* mesh_load(char* path)
 
     while (!feof(file))
     {
-        char line[32];
+        char line[64];
         fscanf(file, "%s", line);
 
         if (strcmp(line, "v") == 0)
