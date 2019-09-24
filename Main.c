@@ -22,13 +22,17 @@ int main(void)
     struct Mesh* cylinder   = mesh_load("res/cylinder.obj");
     struct Mesh* cone       = mesh_load("res/cone.obj");
     struct Mesh* sphere     = mesh_load("res/sphere.obj");
+    struct Mesh* icoSphere  = mesh_load("res/ico_sphere.obj");
+    struct Mesh* monkey     = mesh_load("res/monkey.obj");
     struct Texture* wall    = texture_create("res/ground.jpg");
     struct Light* light     = light_create(0.0f, 0.0f, 1.0f);
 
-    camera_set_position(camera, 3, 3, 3);
+    camera_set_position(camera, 3, 3, 5);
     mesh_set_position(cube, -2, 0, 0);
     mesh_set_position(cone, 2, 0, 0);
     mesh_set_position(sphere, 0, 0, 2);
+    mesh_set_position(icoSphere, 2, 0, 2);
+    mesh_set_position(monkey, -2, 0, 2);
 
     while (window_is_open(window))
     {
@@ -37,16 +41,18 @@ int main(void)
         window_update(window);
         window_clear(0.0f, 0.0f, 0.0f);
 
-        light_illuminate(light, shader);
-
         camera_look_at(camera, shader, 0, 0, 0);
         light_set_position(light, 0.0f, cosf(t) * 3, sinf(t) * 3);
+
+        light_illuminate(light, shader);
 
         texture_bind(wall);
         mesh_draw(cube, shader);
         mesh_draw(cylinder, shader);
         mesh_draw(cone, shader);
         mesh_draw(sphere, shader);
+        mesh_draw(icoSphere, shader);
+        mesh_draw(monkey, shader);
 
         window_swap_buffers(window);
         t += 0.05f;
@@ -57,6 +63,9 @@ int main(void)
     mesh_destroy(cube);
     mesh_destroy(cylinder);
     mesh_destroy(cone);
+    mesh_destroy(sphere);
+    mesh_destroy(icoSphere);
+    mesh_destroy(monkey);
     camera_destroy(camera);
     shader_destroy(shader);
 
